@@ -364,6 +364,13 @@ CREATE TABLE IF NOT EXISTS saved_registered_client (
 	registered_client VARCHAR(8192)
 );
 
+CREATE TABLE IF NOT EXISTS launch_context (
+	id BIGINT  PRIMARY KEY,
+	access_token_id BIGINT,
+	name VARCHAR(256),
+	value VARCHAR(256)
+);
+
 CREATE TABLE IF NOT EXISTS device_code (
 	id BIGSERIAL PRIMARY KEY,
 	device_code VARCHAR(1024),

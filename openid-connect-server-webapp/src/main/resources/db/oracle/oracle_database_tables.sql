@@ -391,12 +391,22 @@ CREATE TABLE claim_issuer (
   issuer VARCHAR2(1024) NOT NULL
 );
 
+CREATE TABLE launch_context (
+	id NUMBER PRIMARY KEY,
+  access_token_id NUMBER(19),
+	name VARCHAR2(256),
+	value VARCHAR2(256)
+);
+
+CREATE SEQUENCE launch_context_seq START WITH 1;
+
+CREATE SEQUENCE saved_registered_client_seq START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+
 CREATE TABLE saved_registered_client (
   id NUMBER(19) NOT NULL PRIMARY KEY,
   issuer VARCHAR2(1024),
   registered_client CLOB
 );
-CREATE SEQUENCE saved_registered_client_seq START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 
 CREATE TABLE IF NOT EXISTS device_code (
 	id NUMBER(19) NOT NULL PRIMARY KEY,

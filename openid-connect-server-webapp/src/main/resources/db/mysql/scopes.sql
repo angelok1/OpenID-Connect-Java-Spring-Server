@@ -16,7 +16,27 @@ INSERT INTO system_scope_TEMP (scope, description, icon, restricted, default_sco
   ('email', 'email address', 'envelope', false, true, false, null),
   ('address', 'physical address', 'home', false, true, false, null),
   ('phone', 'telephone number', 'bell', false, true, false, null),
-  ('offline_access', 'offline access', 'time', false, false, false, null);
+  ('offline_access', 'offline access', 'time', false, false, false, null),
+  ('smart', 'Details of SMART authorization', 'user', false, false),
+  ('smart/orchestrate_launch', 'Orchestrate a launch with EHR context', 'user', false, false, false, null),
+  ('launch', 'Launch with an existing context', 'user', false, false, false, null),
+  ('launch/patient', 'Launch with patient context', 'user', false, false, false, null),
+  ('launch/encounter', 'Launch with encounter context', 'user', false, false, false, null),
+  ('launch/resource', 'Launch with resource context', 'user', false, false, false, null),
+  ('launch/other', 'Launch with other context', 'user', false, false, false, null),
+  ('search', 'SMART on FHIR search', 'user', false, false, false, null),
+  ('summary', 'SMART on FHIR summary', 'user', false, false, false, null),
+  ('user/*.*', 'Permission to read and write all resources that the current user can access', 'user', false, false, false, null),
+  ('patient/*.*', 'Permission to read/write any resource for the current patient', 'user', false, false, false, null),
+  ('patient/*.read', 'Read Permission to read any resource for the current patient', 'user', false, false, false, null),
+  ('patient/*.write', 'Write Permission to read any resource for the current patient', 'user', false, false, false, null),
+  ('patient/Patient/*.*', 'Read/Write to FHIR Patient Resources', 'user', false, false, false, null),
+  ('patient/Patient/*.read', 'Read to FHIR Patient Resources', 'user', false, false, false, null),
+  ('patient/Patient/*.write', 'Write to FHIR Patient Resources', 'user', false, false, false, null),
+  ('patient/Observation/*.*', 'Read/Write to FHIR Observations Resources', 'user', false, false, false, null),
+  ('patient/Observation/*.read', 'Read to FHIR Observations Resources', 'user', false, false, false, null),
+  ('patient/Observation/*.write', 'Write to FHIR Observations Resources', 'user', false, false, false, null);
+
   
 --
 -- Merge the temporary scopes safely into the database. This is a two-step process to keep scopes from being created on every startup with a persistent store.

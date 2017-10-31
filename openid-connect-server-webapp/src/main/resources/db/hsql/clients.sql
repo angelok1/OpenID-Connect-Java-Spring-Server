@@ -13,6 +13,54 @@ START TRANSACTION;
 INSERT INTO client_details_TEMP (client_id, client_secret, client_name, dynamically_registered, refresh_token_validity_seconds, access_token_validity_seconds, id_token_validity_seconds, allow_introspection) VALUES
 	('client', 'secret', 'Test Client', false, null, 3600, 600, true);
 
+INSERT INTO client_details_TEMP (client_id, client_secret, client_name, dynamically_registered, refresh_token_validity_seconds, access_token_validity_seconds, id_token_validity_seconds, allow_introspection) VALUES
+	('EMR', 'secret', 'EMR', false, null, 3600, 600, true);
+
+INSERT INTO client_redirect_uri_TEMP (owner_id, redirect_uri) VALUES
+	('EMR', 'http://localhost/EMR');
+
+INSERT INTO client_grant_type_TEMP (owner_id, grant_type) VALUES
+	('EMR', 'authorization_code'),
+	('EMR', 'urn:ietf:params:oauth:grant_type:redelegate'),
+	('EMR', 'urn:ietf:params:oauth:grant-type:device_code'),
+	('EMR', 'implicit'),
+		('EMR', 'password'),
+			('EMR', 'client_credentials'),
+	('EMR', 'refresh_token');
+
+INSERT INTO client_scope_TEMP (owner_id, scope) VALUES
+	('EMR', 'openid'),
+	('EMR', 'profile'),
+	('EMR', 'email'),
+	('EMR', 'address'),
+		('EMR', 'launch'),
+	('EMR', 'patient/*.*'),
+	('EMR', 'offline_access');
+
+INSERT INTO client_redirect_uri_TEMP (owner_id, redirect_uri) VALUES
+	('CDS', 'http://localhost/EMR');
+
+INSERT INTO client_grant_type_TEMP (owner_id, grant_type) VALUES
+	('CDS', 'authorization_code'),
+	('CDS', 'urn:ietf:params:oauth:grant_type:redelegate'),
+	('CDS', 'urn:ietf:params:oauth:grant-type:device_code'),
+	('CDS', 'implicit'),
+		('CDS', 'password'),
+			('CDS', 'client_credentials'),
+	('CDS', 'refresh_token');
+
+INSERT INTO client_details_TEMP (client_id, client_secret, client_name, dynamically_registered, refresh_token_validity_seconds, access_token_validity_seconds, id_token_validity_seconds, allow_introspection) VALUES
+	('CDS', 'secret', 'CDS', false, null, 3600, 600, true);
+
+
+INSERT INTO client_scope_TEMP (owner_id, scope) VALUES
+	('CDS', 'openid'),
+	('CDS', 'profile'),
+	('CDS', 'email'),
+	('CDS', 'address'),
+	('CDS', 'patient/*.*'),
+	('CDS', 'offline_access');
+
 INSERT INTO client_scope_TEMP (owner_id, scope) VALUES
 	('client', 'openid'),
 	('client', 'profile'),

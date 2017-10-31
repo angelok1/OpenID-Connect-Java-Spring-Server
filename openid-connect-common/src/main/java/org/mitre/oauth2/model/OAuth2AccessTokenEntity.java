@@ -25,38 +25,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.mitre.oauth2.model.convert.JWTStringConverter;
 import org.mitre.openid.connect.model.ApprovedSite;
 import org.mitre.uma.model.Permission;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessTokenJackson1Deserializer;
+import org.smartplatforms.oauth2.LaunchContextEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessTokenJackson1Serializer;
 import org.springframework.security.oauth2.common.OAuth2AccessTokenJackson2Deserializer;
 import org.springframework.security.oauth2.common.OAuth2AccessTokenJackson2Serializer;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 
 import com.nimbusds.jwt.JWT;
+import com.google.common.collect.Sets;
 
 /**
  * @author jricher
@@ -112,6 +95,8 @@ public class OAuth2AccessTokenEntity implements OAuth2AccessToken {
 
 	private Set<String> scope;
 
+	private Set<LaunchContextEntity> launchContextParams = Sets.newHashSet();
+
 	private Set<Permission> permissions;
 
 	private ApprovedSite approvedSite;
@@ -143,12 +128,17 @@ public class OAuth2AccessTokenEntity implements OAuth2AccessToken {
 	}
 
 	/**
-	 * Get all additional information to be sent to the serializer as part of the token response.
-	 * This map is not persisted to the database.
+	 * Get all additional information to be sent to the serializer. Inserts a copy of the IdToken (in JWT String form)
+	 * and launch context params.
 	 */
 	@Override
 	@Transient
 	public Map<String, Object> getAdditionalInformation() {
+		if (getLaunchContext() != null) {
+			for (LaunchContextEntity cparam : getLaunchContext()){
+				additionalInformation.put(cparam.getName(), cparam.getValue());
+			}
+		}
 		return additionalInformation;
 	}
 
@@ -254,6 +244,19 @@ public class OAuth2AccessTokenEntity implements OAuth2AccessToken {
 	@Transient
 	public boolean isExpired() {
 		return getExpiration() == null ? false : System.currentTimeMillis() > getExpiration().getTime();
+	}
+
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="access_token_id")
+	public Set<LaunchContextEntity> getLaunchContext() {
+		return launchContextParams;
+	}
+
+	/**
+	 * @param launchContetParams the LaunchContextParams to set
+	 */
+	public void setLaunchContext(Set<LaunchContextEntity> launchContextParams) {
+		this.launchContextParams = launchContextParams;
 	}
 
 	/**
