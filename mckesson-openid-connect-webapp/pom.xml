@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mckesson</groupId>
+	<parent>
+		<groupId>org.mitre</groupId>
+		<artifactId>openid-connect-parent</artifactId>
+		<version>1.3.2-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>openid-connect-server-webapp</artifactId>
+	<packaging>war</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>mckesson-openid-connect-server-webapp</warName>
+					<overlays>
+						<overlay>
+							<groupId>org.mitre</groupId>
+							<artifactId>openid-connect-server-webapp</artifactId>
+						</overlay>
+					</overlays>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<war>${project.build.directory}/mckesson-openid-connect-server-webapp.war</war>
+					<webAppConfig>
+						<contextPath>/openid-connect-server-webapp</contextPath>
+						<!--<webInfIncludeJarPattern>.*/openid-connect-[^/]*\.jar$|.*/classes/.*</webInfIncludeJarPattern>-->
+					</webAppConfig>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<java-version>1.8</java-version>
+		<org.slf4j-version>1.7.25</org.slf4j-version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.mitre</groupId>
+			<artifactId>openid-connect-parent</artifactId>
+			<type>pom</type>
+			<version>1.3.2-SNAPSHOT</version>
+			<scope>import</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mitre</groupId>
+			<artifactId>openid-connect-server-webapp</artifactId>
+			<type>war</type>
+			<version>1.3.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mitre</groupId>
+			<artifactId>openid-connect-common</artifactId>
+			<version>1.3.2-SNAPSHOT</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.github.noraui/ojdbc7 -->
+		<dependency>
+			<groupId>com.github.noraui</groupId>
+			<artifactId>ojdbc7</artifactId>
+			<version>12.1.0.2</version>
+		</dependency>
+	</dependencies>
+</project>
