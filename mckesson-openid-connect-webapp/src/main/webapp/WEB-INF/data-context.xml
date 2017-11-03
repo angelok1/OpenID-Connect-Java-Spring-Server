@@ -29,31 +29,22 @@
             <property name="password" value="oic" />
         </bean>
     -->
-	<!--
-	<bean id="dataSource2" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-		<property name="dataSourceClassName" value="oracle.jdbc.pool.OracleDataSource" />
-		<property name="username" value="oauth" />
-		<property name="password" value="test" />
-		<property name="serverName" value="192.168.131.131" />
-		<property name="portNumber" value="8080" />
-		<property name="databaseName" value="oauth" />
-		<property name="driverType" value="thin" />
-	</bean>
--->
+
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<!--<property name="driverClassName" value="oracle.jdbc.OracleDriver" />-->
+	<!--<property name="driverClassName" value="oracle.jdbc.OracleDriver" />-->
 		<property name="dataSourceClassName" value="oracle.jdbc.pool.OracleDataSource" />
-		<property name="username" value="oauth" />
-		<property name="password" value="test" />
-
-
+		<property name="username" value="${OAUTH_USER_NAME:oauth}" />
+		<property name="password" value="${OAUTH_PASSWORD:test}" />
 		<property name="dataSourceProperties">
 			<props>
-
+				<prop key="url">jdbc:oracle:thin:@//${OAUTH_JDBC_URL}</prop>
+				<!--or, alternatively (esp, if you want to run it locally)-->
+<!--
 				<prop key="serverName">172.16.221.145</prop>
 				<prop key="portNumber">1521</prop>
 				<prop key="driverType">thin</prop>
 				<prop key="databaseName">XE</prop>
+-->
 			</props>
 		</property>
 	</bean>
