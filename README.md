@@ -1,6 +1,54 @@
 # MITREid Connect
 ---
 
+This repo is a fork from the MITREid OpenID Connect project.
+
+It includes SMART OAUTH functionality as well as Mckesson-centric implementations for Oracle 11g.
+
+If you want to try the server on HSQL, you can run the openid-connect-server-webapp project by doing the following:
+
+```terminal
+
+$ mvn package <-- at the parent level
+$ mvn clean deploy <-- at the parent level
+$ cd openid-connect-server-webapp
+$ mvn jetty:run
+
+```
+
+The Mckesson-openid-connect-webapp is the overlay project. To use it, do the following:
+
+```
+
+$ mvn package <-- at the parent level
+$ mvn clean deploy <-- at the parent level
+$ cd mckesson-openid-connect-webapp
+$ mvn clean package
+$ mvn jetty:run
+
+```
+
+If you need to create a new, database in a running instance of Oracle, uncomment the lines at the bottom of data-context.xml that run the seed scripts. You may want to run the create_db-user file prior to running the seeds if you need the user and schema created. Be sure to comment those back out next time you run this. Another option would be to run the scripts manually.
+
+Additionally, if you don't want to set environment variables, you can uncomment this (and fill in with your Oracle's server's information) in data-context.xml rather that use the connection url.:
+
+```xml
+
+<prop key="serverName">172.16.221.145</prop>
+<prop key="portNumber">1521</prop>
+<prop key="driverType">thin</prop>
+<prop key="databaseName">XE</prop>
+
+```
+
+The server will be available at http://localhost:8080/openid-connect-server-webapp
+
+
+Contributors to the McKesson version:
+
+* [Tun Naing](https://github.com/naingtu/)
+* [Angelo Kastroulis](https://github.com/angelok1/)
+
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.mitre/openid-connect-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.mitre/openid-connect-parent) [![Travis CI](https://travis-ci.org/mitreid-connect/OpenID-Connect-Java-Spring-Server.svg?branch=master)](https://travis-ci.org/mitreid-connect/OpenID-Connect-Java-Spring-Server)  [![Codecov](https://codecov.io/github/mitreid-connect/OpenID-Connect-Java-Spring-Server/coverage.svg?branch=master)](https://codecov.io/github/mitreid-connect/OpenID-Connect-Java-Spring-Server)
 
 This project contains a certified OpenID Connect reference implementation in Java on the Spring platform, including a functioning [server library](openid-connect-server), [deployable server package](openid-connect-server-webapp), [client (RP) library](openid-connect-client), and general [utility libraries](openid-connect-common). The server can be used as an OpenID Connect Identity Provider as well as a general-purpose OAuth 2.0 Authorization Server.
