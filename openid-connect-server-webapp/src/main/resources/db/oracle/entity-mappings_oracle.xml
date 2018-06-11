@@ -67,6 +67,13 @@
                 <column name="val"/>
                 <map-key-column name="param"/>
             </element-collection>
+			<!-- table name too long: authentication_holder_scope -->
+			<element-collection fetch="EAGER" name="scope">
+				<column name="scope"/>
+				<collection-table name="auth_holder_scope">
+					<join-column name="owner_id" />
+				</collection-table>
+			</element-collection>
         </attributes>
     </entity>
 
@@ -89,6 +96,32 @@
                 <sequence-generator name="ClientDetailsSequenceGenerator" sequence-name="client_details_seq" allocation-size="1"/>
                 <column name="id"/>
             </id>
+			<!-- column name too long: id_token_validity_seconds -->
+			<basic name="idTokenValiditySeconds">
+				<column name="id_token_validity_sec"/>
+			</basic>
+			<!-- column name too long: access_token_validity_seconds -->
+			<basic name="accessTokenValiditySeconds">
+				<column name="access_token_validity_sec"/>
+			</basic>
+			<!-- column name too long: refresh_token_validity_seconds -->
+			<basic name="refreshTokenValiditySeconds">
+				<column name="refresh_token_validity_sec"/>
+			</basic>
+			<!-- column name too long: device_code_validity_seconds -->
+			<basic name="deviceCodeValiditySeconds">
+				<column name="device_code_validity_sec"/>
+			</basic>
+			<!-- column name too long: request_object_signing_alg -->
+			<basic name="requestObjectSigningAlg">
+				<column name="request_object_sign_alg"/>
+				<convert converter="org.mitre.oauth2.model.convert.JWEAlgorithmStringConverter"/>
+			</basic>
+			<!-- column name too long: user_info_signed_response_alg -->
+			<basic name="userInfoSignedResponseAlg">
+				<column name="user_info_signed_resp_alg"/>
+				<convert converter="org.mitre.oauth2.model.convert.JWEAlgorithmStringConverter"/>
+			</basic>
             <!-- column name too long: user_info_encrypted_response_alg -->
             <basic name="userInfoEncryptedResponseAlg">
                 <column name="user_info_encrypted_resp_alg"/>
@@ -99,6 +132,11 @@
                 <column name="user_info_encrypted_resp_enc"/>
                 <convert converter="org.mitre.oauth2.model.convert.JWEEncryptionMethodStringConverter"/>
             </basic>
+			<!-- column name too long: id_token_signed_response_alg -->
+			<basic name="idTokenSignedResponseAlg">
+				<column name="id_token_signed_resp_alg"/>
+				<convert converter="org.mitre.oauth2.model.convert.JWEAlgorithmStringConverter"/>
+			</basic>
             <!-- column name too long: id_token_encrypted_response_alg -->
             <basic name="idTokenEncryptedResponseAlg">
                 <column name="id_token_encrypted_resp_alg"/>

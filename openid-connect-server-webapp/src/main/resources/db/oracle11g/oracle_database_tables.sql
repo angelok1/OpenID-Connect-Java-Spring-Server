@@ -192,7 +192,6 @@ CREATE TABLE client_details (
   CONSTRAINT allow_introspection_check CHECK (allow_introspection in (1,0)),
   CONSTRAINT require_auth_time_check CHECK (require_auth_time in (1,0)),
   CONSTRAINT clear_acc_tok_on_refresh_check CHECK (clear_access_tokens_on_refresh in (1,0))
-
 );
 CREATE SEQUENCE client_details_seq START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 
@@ -257,8 +256,6 @@ CREATE TABLE system_scope (
   icon VARCHAR2(256),
   restricted NUMBER(1) DEFAULT 0 NOT NULL,
   default_scope NUMBER(1) DEFAULT 0 NOT NULL,
-  structured NUMBER(1) DEFAULT 0 NOT NULL,
-  structured_param_description VARCHAR2(256),
 
   CONSTRAINT system_scope_unique UNIQUE (scope),
   CONSTRAINT default_scope_check CHECK (default_scope in (1,0)),
