@@ -37,14 +37,14 @@
 		<property name="password" value="${OAUTH_PASSWORD:test}" />
 		<property name="dataSourceProperties">
 			<props>
-				<prop key="url">jdbc:oracle:thin:@//${OAUTH_JDBC_URL}</prop>
+				<!--<prop key="url">jdbc:oracle:thin:@//${OAUTH_JDBC_URL}</prop> -->
 				<!--or, alternatively (esp, if you want to run it locally)-->
-<!--
-				<prop key="serverName">172.16.221.145</prop>
+
+				<prop key="serverName">172.16.221.132</prop>
 				<prop key="portNumber">1521</prop>
 				<prop key="driverType">thin</prop>
 				<prop key="databaseName">XE</prop>
--->
+
 			</props>
 		</property>
 	</bean>
@@ -141,14 +141,14 @@
 
 	<!-- Use the following to set up the OIC tables in the Oracle DB
 		   Below scripts are intended to be run once at startup. -->
-	<!--
+
         <jdbc:initialize-database data-source="dataSource">
-            <jdbc:script location="classpath:/db/oracle/oracle_database_tables.sql"/>
-            <jdbc:script location="classpath:/db/oracle/security-schema_oracle.sql"/>
-            <jdbc:script location="classpath:/db/oracle/loading_temp_tables_oracle.sql"/>
-            <jdbc:script location="classpath:/db/oracle/users_oracle.sql"/>
-            <jdbc:script location="classpath:/db/oracle/clients_oracle.sql"/>
-            <jdbc:script location="classpath:/db/oracle/scopes_oracle11g.sql"/>
+            <jdbc:script location="classpath:/db/oracle11g/oracle_database_tables.sql"/>
+            <jdbc:script location="classpath:/db/oracle11g/security-schema_oracle.sql"/>
+            <jdbc:script location="classpath:/db/oracle11g/loading_temp_tables_oracle.sql"/>
+            <jdbc:script location="classpath:/db/oracle11g/users_oracle.sql"/>
+            <jdbc:script location="classpath:/db/oracle11g/clients_oracle.sql"/>
+            <jdbc:script location="classpath:/db/oracle11g/scopes_oracle.sql"/>
         </jdbc:initialize-database>
-        -->
+
 </beans>

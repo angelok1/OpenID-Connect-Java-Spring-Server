@@ -259,8 +259,7 @@ CREATE TABLE system_scope (
 
   CONSTRAINT system_scope_unique UNIQUE (scope),
   CONSTRAINT default_scope_check CHECK (default_scope in (1,0)),
-  CONSTRAINT restricted_check CHECK (restricted in (1,0)),
-  CONSTRAINT structured_check CHECK (structured in (1,0))
+  CONSTRAINT restricted_check CHECK (restricted in (1,0))
 );
 CREATE SEQUENCE system_scope_seq START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
 
