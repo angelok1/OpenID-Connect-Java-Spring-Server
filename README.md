@@ -18,27 +18,46 @@ $ mvn jetty:run
 
 The Mckesson-openid-connect-webapp is the overlay project. To use it, do the following:
 
-```
+First, make sure the connection info is correct in /Users/angelo/OpenID-Connect-Java-Spring-Server/mckesson-openid-connect-webapp/src/main/webapp/WEB-INF/data-context.xml.
 
+Also, check that your oracle username/password are correctly set in the file.
+
+```bash
 $ mvn package <-- at the parent level
 $ mvn clean deploy <-- at the parent level
 $ cd mckesson-openid-connect-webapp
 $ mvn clean package
 $ mvn jetty:run
-
 ```
 
-If you need to create a new, database in a running instance of Oracle, uncomment the lines at the bottom of data-context.xml that run the seed scripts. You may want to run the create_db-user file prior to running the seeds if you need the user and schema created. Be sure to comment those back out next time you run this. Another option would be to run the scripts manually.
+If you need to create a new database in a running instance of Oracle, uncomment the lines at the bottom of data-context.xml that run the seed scripts. You may want to run the create_db-user file prior to running the seeds if you need the user and schema created. Be sure to comment those back out next time you run this. Another option would be to run the scripts manually.
+
+```xml
+<jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="classpath:/db/oracle/oracle_database_tables.sql"/>
+    <jdbc:script location="classpath:/db/oracle/security-schema_oracle.sql"/>
+    <jdbc:script location="classpath:/db/oracle/loading_temp_tables_oracle.sql"/>
+    <jdbc:script location="classpath:/db/oracle/users_oracle.sql"/>
+    <jdbc:script location="classpath:/db/oracle/clients_oracle.sql"/>
+    <jdbc:script location="classpath:/db/oracle/scopes_oracle11g.sql"/>
+</jdbc:initialize-database>
+```
 
 Additionally, if you don't want to set environment variables, you can uncomment this (and fill in with your Oracle's server's information) in data-context.xml rather that use the connection url.:
 
-```xml
+Comment out this line:
 
-<prop key="serverName">172.16.221.145</prop>
+```xml
+<prop key="url">jdbc:oracle:thin:@//${OAUTH_JDBC_URL}</prop>
+```
+
+And uncomment these
+
+```xml
+<prop key="serverName">[your server ip]</prop>
 <prop key="portNumber">1521</prop>
 <prop key="driverType">thin</prop>
-<prop key="databaseName">XE</prop>
-
+<prop key="databaseName">[dbname]</prop>
 ```
 
 The server will be available at http://localhost:8080/openid-connect-server-webapp
