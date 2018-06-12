@@ -29,6 +29,12 @@
             <property name="password" value="oic" />
         </bean>
     -->
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="searchSystemEnvironment" value="true" />
+		<property name="location" value="file:${LYNXEMR_PROPERTY_FILE}"></property>
+	</bean>
 
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 	<!--<property name="driverClassName" value="oracle.jdbc.OracleDriver" />-->
@@ -37,14 +43,14 @@
 		<property name="password" value="${OAUTH_PASSWORD:test}" />
 		<property name="dataSourceProperties">
 			<props>
-				<!--<prop key="url">jdbc:oracle:thin:@//${OAUTH_JDBC_URL}</prop> -->
+				<prop key="url">jdbc:oracle:thin:@//${OAUTH_JDBC_URL}</prop>
 				<!--or, alternatively (esp, if you want to run it locally)-->
-
+<!--
 				<prop key="serverName">172.16.221.132</prop>
 				<prop key="portNumber">1521</prop>
 				<prop key="driverType">thin</prop>
 				<prop key="databaseName">XE</prop>
-
+-->
 			</props>
 		</property>
 	</bean>
@@ -141,7 +147,7 @@
 
 	<!-- Use the following to set up the OIC tables in the Oracle DB
 		   Below scripts are intended to be run once at startup. -->
-
+<!--
         <jdbc:initialize-database data-source="dataSource">
             <jdbc:script location="classpath:/db/oracle11g/oracle_database_tables.sql"/>
             <jdbc:script location="classpath:/db/oracle11g/security-schema_oracle.sql"/>
@@ -150,5 +156,5 @@
             <jdbc:script location="classpath:/db/oracle11g/clients_oracle.sql"/>
             <jdbc:script location="classpath:/db/oracle11g/scopes_oracle.sql"/>
         </jdbc:initialize-database>
-
+-->
 </beans>

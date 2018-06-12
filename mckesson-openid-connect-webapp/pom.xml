@@ -7,7 +7,7 @@
 		<version>1.3.2</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>openid-connect-server-webapp</artifactId>
+	<artifactId>mckesson-openid-connect-server-webapp</artifactId>
 	<packaging>war</packaging>
 	<build>
 		<plugins>

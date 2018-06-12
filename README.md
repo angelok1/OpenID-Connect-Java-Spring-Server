@@ -16,21 +16,21 @@ $ mvn jetty:run
 
 ```
 
-The Mckesson-openid-connect-webapp is the overlay project. To use it, do the following:
+### The ``mckesson-openid-connect-webapp`` is an overlay project for G2.
+To use it, do the following:
 
-First, make sure the connection info is correct in /Users/angelo/OpenID-Connect-Java-Spring-Server/mckesson-openid-connect-webapp/src/main/webapp/WEB-INF/data-context.xml.
+First, make sure the Oracle connection info, username, and password are correct in ``[your path]/OpenID-Connect-Java-Spring-Server/emr.properties``.
 
-Also, check that your oracle username/password are correctly set in the file.
-
-```bash
-$ mvn package <-- at the parent level
-$ mvn clean deploy <-- at the parent level
-$ cd mckesson-openid-connect-webapp
-$ mvn clean package
-$ mvn jetty:run
 ```
+OAUTH_JDBC_URL=[your server]:1521/[your instance]
+OAUTH_USER_NAME=[username, "oauth" by default]
+OAUTH_PASSWORD=[password, "test" by default]
+```
+Second, be sure to set the environment variable ``LYNXEMR_PROPERTY_FILE`` to the location of that file.
 
-If you need to create a new database in a running instance of Oracle, uncomment the lines at the bottom of data-context.xml that run the seed scripts. You may want to run the create_db-user file prior to running the seeds if you need the user and schema created. Be sure to comment those back out next time you run this. Another option would be to run the scripts manually.
+Database connection settings are used in this file: ``mckesson-openid-connect-webapp/src/main/webapp/WEB-INF/data-context.xml``
+
+If you need to create a new local test database in a running instance of Oracle, uncomment the lines at the bottom of ``data-context.xml`` that run the seed scripts. You may want to run the ``mckesson-openid-connect-webapp/src/main/resources/db/oracle11g/create_db-user`` file prior to running the seeds if you need the user and schema created. Be sure to comment those back out next time you run this. Another option would be to run the scripts manually.
 
 ```xml
 <jdbc:initialize-database data-source="dataSource">
@@ -43,25 +43,28 @@ If you need to create a new database in a running instance of Oracle, uncomment 
 </jdbc:initialize-database>
 ```
 
-Additionally, if you don't want to set environment variables, you can uncomment this (and fill in with your Oracle's server's information) in data-context.xml rather that use the connection url.:
-
-Comment out this line:
+If you're testing locally, you may want to disable the password hash since the above scripts don't hash the password. You can do that by disabling ``passwordEncoder`` in ``mckesson-openid-connect-webapp/src/main/webapp/WEB-INF/user-context.xml``.
 
 ```xml
-<prop key="url">jdbc:oracle:thin:@//${OAUTH_JDBC_URL}</prop>
+<security:authentication-manager id="authenticationManager">
+    <security:authentication-provider>
+        <!--<security:password-encoder ref="passwordEncoder"/>-->
+        <security:jdbc-user-service data-source-ref="dataSource" />
+    </security:authentication-provider>
+</security:authentication-manager>
 ```
 
-And uncomment these
+Lastly, build and run the server.
 
-```xml
-<prop key="serverName">[your server ip]</prop>
-<prop key="portNumber">1521</prop>
-<prop key="driverType">thin</prop>
-<prop key="databaseName">[dbname]</prop>
+```bash
+$ mvn package <-- at the parent level
+$ mvn clean deploy <-- at the parent level
+$ cd mckesson-openid-connect-webapp
+$ mvn clean package
+$ mvn jetty:run
 ```
 
 The server will be available at http://localhost:8080/openid-connect-server-webapp
-
 
 Contributors to the McKesson version:
 
